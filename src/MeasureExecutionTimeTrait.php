@@ -30,8 +30,7 @@ trait MeasureExecutionTimeTrait
 {
     /**
      * @param Closure $closure
-     * @param float   $time
-     *
+     * @param float $time
      * @return mixed
      */
     protected function measureTime(Closure $closure, &$time)

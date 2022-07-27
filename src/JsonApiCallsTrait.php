@@ -21,9 +21,9 @@ declare(strict_types=1);
 
 namespace Whoa\Testing;
 
+use Laminas\Diactoros\Stream;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
-use Zend\Diactoros\Stream;
 
 /**
  * @package Whoa\Testing
@@ -33,10 +33,9 @@ trait JsonApiCallsTrait
     /**
      * @param string $uri
      * @param string $json
-     * @param array  $headers
-     * @param array  $cookies
-     * @param array  $files
-     *
+     * @param array $headers
+     * @param array $cookies
+     * @param array $files
      * @return ResponseInterface
      */
     protected function postJsonApi(
@@ -45,8 +44,7 @@ trait JsonApiCallsTrait
         array $headers = [],
         array $cookies = [],
         array $files = []
-    ): ResponseInterface
-    {
+    ): ResponseInterface {
         $headers['CONTENT_TYPE'] = 'application/vnd.api+json';
 
         return $this->call('POST', $uri, [], [], $headers, $cookies, $files, [], $this->streamFromString($json));
@@ -55,10 +53,9 @@ trait JsonApiCallsTrait
     /**
      * @param string $uri
      * @param string $json
-     * @param array  $headers
-     * @param array  $cookies
-     * @param array  $files
-     *
+     * @param array $headers
+     * @param array $cookies
+     * @param array $files
      * @return ResponseInterface
      */
     protected function putJsonApi(
@@ -67,8 +64,7 @@ trait JsonApiCallsTrait
         array $headers = [],
         array $cookies = [],
         array $files = []
-    ): ResponseInterface
-    {
+    ): ResponseInterface {
         $headers['CONTENT_TYPE'] = 'application/vnd.api+json';
 
         return $this->call('PUT', $uri, [], [], $headers, $cookies, $files, [], $this->streamFromString($json));
@@ -77,10 +73,9 @@ trait JsonApiCallsTrait
     /**
      * @param string $uri
      * @param string $json
-     * @param array  $headers
-     * @param array  $cookies
-     * @param array  $files
-     *
+     * @param array $headers
+     * @param array $cookies
+     * @param array $files
      * @return ResponseInterface
      */
     protected function patchJsonApi(
@@ -89,8 +84,7 @@ trait JsonApiCallsTrait
         array $headers = [],
         array $cookies = [],
         array $files = []
-    ): ResponseInterface
-    {
+    ): ResponseInterface {
         $headers['CONTENT_TYPE'] = 'application/vnd.api+json';
 
         return $this->call('PATCH', $uri, [], [], $headers, $cookies, $files, [], $this->streamFromString($json));
@@ -99,9 +93,8 @@ trait JsonApiCallsTrait
     /**
      * @param string $uri
      * @param string $json
-     * @param array  $headers
-     * @param array  $cookies
-     *
+     * @param array $headers
+     * @param array $cookies
      * @return ResponseInterface
      */
     protected function deleteJsonApi(
@@ -109,8 +102,7 @@ trait JsonApiCallsTrait
         string $json,
         array $headers = [],
         array $cookies = []
-    ): ResponseInterface
-    {
+    ): ResponseInterface {
         $headers['CONTENT_TYPE'] = 'application/vnd.api+json';
 
         return $this->call('DELETE', $uri, [], [], $headers, $cookies, [], [], $this->streamFromString($json));
@@ -118,7 +110,6 @@ trait JsonApiCallsTrait
 
     /**
      * @param string $content
-     *
      * @return StreamInterface
      */
     protected function streamFromString(string $content): StreamInterface

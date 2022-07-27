@@ -31,9 +31,9 @@ class Sapi extends \Whoa\Core\Application\Sapi
     /**
      * @var ResponseInterface
      */
-    private $response;
+    private ResponseInterface $response;
 
-    /** @noinspection PhpMissingParentCallCommonInspection
+    /**
      * @inheritdoc
      */
     public function handleResponse(ResponseInterface $response): void

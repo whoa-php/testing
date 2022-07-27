@@ -34,17 +34,16 @@ trait TestCaseTrait
     /**
      * @var array
      */
-    private $eventHandlers = [];
+    private array $eventHandlers = [];
 
     /**
-     * @param array|null                      $server
-     * @param array|null                      $queryParams
-     * @param array|object|null               $parsedBody
-     * @param array|null                      $cookies
-     * @param array|null                      $files
+     * @param array|null $server
+     * @param array|null $queryParams
+     * @param array|object|null $parsedBody
+     * @param array|null $cookies
+     * @param array|null $files
      * @param string|resource|StreamInterface $messageBody
-     * @param string                          $protocolVersion
-     *
+     * @param string $protocolVersion
      * @return Sapi
      */
     abstract protected function createSapi(
@@ -62,22 +61,19 @@ trait TestCaseTrait
      */
     abstract protected function createApplication(): ApplicationInterface;
 
-    /** @noinspection PhpTooManyParametersInspection
-     * @param string                          $method
-     * @param string                          $uri
-     * @param array                           $queryParams
-     * @param array                           $parsedBody
-     * @param array                           $headers
-     * @param array                           $cookies
-     * @param array                           $files
-     * @param array                           $server
+    /**
+     * @param string $method
+     * @param string $uri
+     * @param array $queryParams
+     * @param array $parsedBody
+     * @param array $headers
+     * @param array $cookies
+     * @param array $files
+     * @param array $server
      * @param string|resource|StreamInterface $content
-     * @param string                          $host
-     * @param string                          $protocolVersion
-     *
+     * @param string $host
+     * @param string $protocolVersion
      * @return ResponseInterface
-     *
-     * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     protected function call(
         string $method,
@@ -91,8 +87,7 @@ trait TestCaseTrait
         $content = 'php://input',
         string $host = 'localhost',
         string $protocolVersion = '1.1'
-    ): ResponseInterface
-    {
+    ): ResponseInterface {
         $headers['host'] = $host;
 
         $prefix = 'HTTP_';
@@ -104,10 +99,10 @@ trait TestCaseTrait
             $server[$name] = $value;
         }
 
-        $server['REQUEST_URI']    = $uri;
+        $server['REQUEST_URI'] = $uri;
         $server['REQUEST_METHOD'] = $method;
 
-        $app  = $this->createApplication();
+        $app = $this->createApplication();
         $sapi = $this->createSapi($server, $queryParams, $parsedBody, $cookies, $files, $content, $protocolVersion);
         $app->setSapi($sapi)->run();
         unset($app);
@@ -128,7 +123,6 @@ trait TestCaseTrait
 
     /**
      * @param Closure $handler
-     *
      * @return void
      */
     protected function addOnHandleRequestEvent(Closure $handler): void
@@ -138,7 +132,6 @@ trait TestCaseTrait
 
     /**
      * @param Closure $handler
-     *
      * @return void
      */
     protected function addOnHandleResponseEvent(Closure $handler): void
@@ -148,7 +141,6 @@ trait TestCaseTrait
 
     /**
      * @param Closure $handler
-     *
      * @return void
      */
     protected function addOnContainerCreatedEvent(Closure $handler): void
@@ -158,7 +150,6 @@ trait TestCaseTrait
 
     /**
      * @param Closure $handler
-     *
      * @return void
      */
     protected function addOnContainerConfiguredEvent(Closure $handler): void

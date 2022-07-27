@@ -29,25 +29,25 @@ use Whoa\Contracts\Commands\IoInterface;
 interface CommandsDebugIoInterface extends IoInterface
 {
     /** @var int Log record key */
-    const RECORD_KEY_TYPE = 0;
+    public const RECORD_KEY_TYPE = 0;
 
     /** @var int Log record key */
-    const RECORD_KEY_VERBOSITY = self::RECORD_KEY_TYPE + 1;
+    public const RECORD_KEY_VERBOSITY = self::RECORD_KEY_TYPE + 1;
 
     /** @var int Log record key */
-    const RECORD_KEY_DATE_TIME = self::RECORD_KEY_VERBOSITY + 1;
+    public const RECORD_KEY_DATE_TIME = self::RECORD_KEY_VERBOSITY + 1;
 
     /** @var int Log record key */
-    const RECORD_KEY_MESSAGE = self::RECORD_KEY_DATE_TIME + 1;
+    public const RECORD_KEY_MESSAGE = self::RECORD_KEY_DATE_TIME + 1;
 
     /** @var int Log record type value */
-    const TYPE_INFO = 0;
+    public const TYPE_INFO = 0;
 
     /** @var int Log record type value */
-    const TYPE_WARNING = self::TYPE_INFO + 1;
+    public const TYPE_WARNING = self::TYPE_INFO + 1;
 
     /** @var int Log record type value */
-    const TYPE_ERROR = self::TYPE_WARNING + 1;
+    public const TYPE_ERROR = self::TYPE_WARNING + 1;
 
     /**
      * @return array

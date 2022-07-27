@@ -26,6 +26,7 @@ use Whoa\Contracts\Container\ContainerInterface as WhoaContainerInterface;
 use Psr\Container\ContainerInterface as PsrContainerInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
+
 use function array_merge;
 use function assert;
 use function call_user_func_array;
@@ -39,16 +40,15 @@ trait ApplicationWrapperTrait
     /**
      * @var array
      */
-    private $events = [];
+    private array $events = [];
 
     /**
      * @var PsrContainerInterface
      */
-    private $container;
+    private PsrContainerInterface $container;
 
     /**
      * @param Closure $handler
-     *
      * @return ApplicationWrapperInterface
      */
     public function addOnHandleRequest(Closure $handler): ApplicationWrapperInterface
@@ -58,7 +58,6 @@ trait ApplicationWrapperTrait
 
     /**
      * @param Closure $handler
-     *
      * @return ApplicationWrapperInterface
      */
     public function addOnHandleResponse(Closure $handler): ApplicationWrapperInterface
@@ -68,7 +67,6 @@ trait ApplicationWrapperTrait
 
     /**
      * @param Closure $handler
-     *
      * @return ApplicationWrapperInterface
      */
     public function addOnContainerCreated(Closure $handler): ApplicationWrapperInterface
@@ -78,7 +76,6 @@ trait ApplicationWrapperTrait
 
     /**
      * @param Closure $handler
-     *
      * @return ApplicationWrapperInterface
      */
     public function addOnContainerLastConfigurator(Closure $handler): ApplicationWrapperInterface
@@ -87,36 +84,34 @@ trait ApplicationWrapperTrait
     }
 
     /**
-     * @param int     $eventId
+     * @param int $eventId
      * @param Closure $handler
-     *
      * @return ApplicationWrapperInterface
      */
     protected function addEventHandler(int $eventId, Closure $handler): ApplicationWrapperInterface
     {
-        assert(in_array($eventId, [
+        assert(
+            in_array($eventId, [
                 ApplicationWrapperInterface::EVENT_ON_HANDLE_REQUEST,
                 ApplicationWrapperInterface::EVENT_ON_HANDLE_RESPONSE,
                 ApplicationWrapperInterface::EVENT_ON_CONTAINER_CREATED,
                 ApplicationWrapperInterface::EVENT_ON_CONTAINER_LAST_CONFIGURATOR,
-            ]) === true);
+            ]) === true
+        );
 
         $this->events[$eventId][] = $handler;
 
         /** @var ApplicationWrapperInterface $self */
         assert($this instanceof ApplicationWrapperInterface);
-        $self = $this;
-
-        return $self;
+        return $this;
     }
 
     /**
-     * @param int   $eventId
+     * @param int $eventId
      * @param array $arguments
-     *
      * @return void
      */
-    protected function dispatchEvent($eventId, array $arguments): void
+    protected function dispatchEvent(int $eventId, array $arguments): void
     {
         $appAndArgs = array_merge([$this], $arguments);
         foreach ($this->events[$eventId] ?? [] as $handler) {
@@ -129,7 +124,6 @@ trait ApplicationWrapperTrait
      */
     protected function createContainerInstance(): WhoaContainerInterface
     {
-        /** @noinspection PhpUndefinedMethodInspection */
         $this->container = parent::createContainerInstance();
 
         $this->dispatchEvent(ApplicationWrapperInterface::EVENT_ON_CONTAINER_CREATED, [$this->getContainer()]);
@@ -139,34 +133,29 @@ trait ApplicationWrapperTrait
 
     /**
      * @param WhoaContainerInterface $container
-     * @param array|null             $globalConfigurators
-     * @param array|null             $routeConfigurators
-     *
+     * @param array|null $globalConfigurators
+     * @param array|null $routeConfigurators
      * @return void
      */
     protected function configureContainer(
         WhoaContainerInterface $container,
         array $globalConfigurators = null,
         array $routeConfigurators = null
-    ): void
-    {
-        /** @noinspection PhpUndefinedMethodInspection */
+    ): void {
         parent::configureContainer($container, $globalConfigurators, $routeConfigurators);
 
         $this->dispatchEvent(ApplicationWrapperInterface::EVENT_ON_CONTAINER_LAST_CONFIGURATOR, [$container]);
     }
 
     /**
-     * @param Closure               $handler
+     * @param Closure $handler
      * @param RequestInterface|null $request
-     *
      * @return ResponseInterface
      */
     protected function handleRequest(Closure $handler, RequestInterface $request = null): ResponseInterface
     {
         $this->dispatchEvent(ApplicationWrapperInterface::EVENT_ON_HANDLE_REQUEST, [$request]);
 
-        /** @noinspection PhpUndefinedMethodInspection */
         $response = parent::handleRequest($handler, $request);
 
         $this->dispatchEvent(ApplicationWrapperInterface::EVENT_ON_HANDLE_RESPONSE, [$response]);

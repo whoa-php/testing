@@ -33,17 +33,17 @@ class CommandsDebugIo implements CommandsDebugIoInterface
     /**
      * @var array
      */
-    private $arguments;
+    private array $arguments;
 
     /**
      * @var array
      */
-    private $options;
+    private array $options;
 
     /**
      * @var array
      */
-    private $records = [];
+    private array $records = [];
 
     /**
      * @param array $arguments
@@ -52,7 +52,7 @@ class CommandsDebugIo implements CommandsDebugIoInterface
     public function __construct(array $arguments = [], array $options = [])
     {
         $this->arguments = $arguments;
-        $this->options   = $options;
+        $this->options = $options;
     }
 
     /**
@@ -105,7 +105,6 @@ class CommandsDebugIo implements CommandsDebugIoInterface
 
     /**
      * @inheritdoc
-     *
      * @throws Exception
      */
     public function writeInfo(string $message, int $verbosity = self::VERBOSITY_NORMAL): IoInterface
@@ -115,7 +114,6 @@ class CommandsDebugIo implements CommandsDebugIoInterface
 
     /**
      * @inheritdoc
-     *
      * @throws Exception
      */
     public function writeWarning(string $message, int $verbosity = self::VERBOSITY_NORMAL): IoInterface
@@ -125,7 +123,6 @@ class CommandsDebugIo implements CommandsDebugIoInterface
 
     /**
      * @inheritdoc
-     *
      * @throws Exception
      */
     public function writeError(string $message, int $verbosity = self::VERBOSITY_NORMAL): IoInterface
@@ -176,21 +173,19 @@ class CommandsDebugIo implements CommandsDebugIoInterface
     }
 
     /**
-     * @param int    $type
-     * @param int    $verbosity
+     * @param int $type
+     * @param int $verbosity
      * @param string $message
-     *
      * @return self
-     *
      * @throws Exception
      */
     private function addRecord(int $type, int $verbosity, string $message): self
     {
         $this->records[] = [
-            static::RECORD_KEY_TYPE      => $type,
+            static::RECORD_KEY_TYPE => $type,
             static::RECORD_KEY_VERBOSITY => $verbosity,
             static::RECORD_KEY_DATE_TIME => new DateTimeImmutable(),
-            static::RECORD_KEY_MESSAGE   => $message,
+            static::RECORD_KEY_MESSAGE => $message,
         ];
 
         return $this;
@@ -198,8 +193,7 @@ class CommandsDebugIo implements CommandsDebugIoInterface
 
     /**
      * @param array $records
-     * @param int   $type
-     *
+     * @param int $type
      * @return array
      */
     private function filterRecordsByType(array $records, int $type): array

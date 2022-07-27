@@ -35,7 +35,7 @@ class CommandsDebugIoTest extends TestCase
     public function testArgumentsAndOptions(): void
     {
         $arguments = ['arv1' => 'arg-value1'];
-        $options   = ['opt1' => 'opt-value1'];
+        $options = ['opt1' => 'opt-value1'];
 
         $ioMock = new CommandsDebugIo($arguments, $options);
 
@@ -56,7 +56,6 @@ class CommandsDebugIoTest extends TestCase
 
     /**
      * Test arguments and options.
-     *
      * @throws Exception
      */
     public function testIO(): void

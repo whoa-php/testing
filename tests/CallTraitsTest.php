@@ -36,10 +36,12 @@ use Zend\Diactoros\Stream;
  */
 class CallTraitsTest extends TestCase
 {
-    use TestCaseTrait, HttpCallsTrait, JsonApiCallsTrait;
+    use HttpCallsTrait;
+    use JsonApiCallsTrait;
+    use TestCaseTrait;
 
     /** Default test URI */
-    const URI = 'some-uri';
+    public const URI = 'some-uri';
 
     /**
      * @var Mock|null
@@ -64,7 +66,7 @@ class CallTraitsTest extends TestCase
     /**
      * @var array
      */
-    private $createSapiArgs = [];
+    private ?array $createSapiArgs = [];
 
     /**
      * Test call web method.
@@ -72,7 +74,7 @@ class CallTraitsTest extends TestCase
     public function testGet(): void
     {
         $headers = ['x-header' => 'value'];
-        $server  = ['HTTP_X_HEADER' => 'value'];
+        $server = ['HTTP_X_HEADER' => 'value'];
 
         $this->willBeCalled('GET', $server);
 
@@ -142,7 +144,7 @@ class CallTraitsTest extends TestCase
      */
     public function testJsonApiPost(): void
     {
-        $json   = '{}';
+        $json = '{}';
         $server = ['CONTENT_TYPE' => 'application/vnd.api+json'];
 
         $this->willBeCalled('POST', $server, $json);
@@ -155,7 +157,7 @@ class CallTraitsTest extends TestCase
      */
     public function testJsonApiPut(): void
     {
-        $json   = '{}';
+        $json = '{}';
         $server = ['CONTENT_TYPE' => 'application/vnd.api+json'];
 
         $this->willBeCalled('PUT', $server, $json);
@@ -168,7 +170,7 @@ class CallTraitsTest extends TestCase
      */
     public function testJsonApiPatch(): void
     {
-        $json   = '{}';
+        $json = '{}';
         $server = ['CONTENT_TYPE' => 'application/vnd.api+json'];
 
         $this->willBeCalled('PATCH', $server, $json);
@@ -181,7 +183,7 @@ class CallTraitsTest extends TestCase
      */
     public function testJsonApiDelete(): void
     {
-        $json   = '{}';
+        $json = '{}';
         $server = ['CONTENT_TYPE' => 'application/vnd.api+json'];
 
         $this->willBeCalled('DELETE', $server, $json);
@@ -228,7 +230,7 @@ class CallTraitsTest extends TestCase
         $this->createSapiArgs = null;
 
         $this->sapi = $this->sapiMock = Mockery::mock(Sapi::class);
-        $this->app  = $this->appMock = Mockery::mock(ApplicationInterface::class);
+        $this->app = $this->appMock = Mockery::mock(ApplicationInterface::class);
     }
 
     /**
@@ -241,7 +243,7 @@ class CallTraitsTest extends TestCase
         $this->createSapiArgs = null;
 
         $this->sapi = $this->sapiMock = null;
-        $this->app  = $this->appMock = null;
+        $this->app = $this->appMock = null;
     }
 
     /**
@@ -263,8 +265,7 @@ class CallTraitsTest extends TestCase
         array $files = null,
         $messageBody = 'php://input',
         string $protocolVersion = '1.1'
-    ): Sapi
-    {
+    ): Sapi {
         assert(
             $server || $queryParams || $parsedBody || $cookies || $files ||
             $messageBody || $protocolVersion || true
@@ -277,17 +278,23 @@ class CallTraitsTest extends TestCase
 
     /**
      * @param string $method
-     * @param array  $server
+     * @param array $server
      * @param string $messageBody
      */
-    private function willBeCalled($method, array $server = [], string $messageBody = 'php://input'): void
+    private function willBeCalled(string $method, array $server = [], string $messageBody = 'php://input'): void
     {
-        $server['HTTP_HOST']      = 'localhost';
-        $server['REQUEST_URI']    = self::URI;
+        $server['HTTP_HOST'] = 'localhost';
+        $server['REQUEST_URI'] = self::URI;
         $server['REQUEST_METHOD'] = $method;
 
         $this->createSapiArgs = [
-            $server, [], [], [], [], $messageBody, '1.1'
+            $server,
+            [],
+            [],
+            [],
+            [],
+            $messageBody,
+            '1.1'
         ];
 
         /** @var Mock $responseMock */

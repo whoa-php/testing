@@ -30,10 +30,9 @@ trait HttpCallsTrait
 {
     /**
      * @param string $uri
-     * @param array  $queryParams
-     * @param array  $headers
-     * @param array  $cookies
-     *
+     * @param array $queryParams
+     * @param array $headers
+     * @param array $cookies
      * @return ResponseInterface
      */
     protected function get(
@@ -41,18 +40,16 @@ trait HttpCallsTrait
         array $queryParams = [],
         array $headers = [],
         array $cookies = []
-    ): ResponseInterface
-    {
+    ): ResponseInterface {
         return $this->call('GET', $uri, $queryParams, [], $headers, $cookies);
     }
 
     /**
      * @param string $uri
-     * @param array  $data
-     * @param array  $headers
-     * @param array  $cookies
-     * @param array  $files
-     *
+     * @param array $data
+     * @param array $headers
+     * @param array $cookies
+     * @param array $files
      * @return ResponseInterface
      */
     protected function post(
@@ -61,8 +58,7 @@ trait HttpCallsTrait
         array $headers = [],
         array $cookies = [],
         array $files = []
-    ): ResponseInterface
-    {
+    ): ResponseInterface {
         $headers['CONTENT_TYPE'] = 'application/x-www-form-urlencoded';
 
         return $this->call('POST', $uri, [], $data, $headers, $cookies, $files);
@@ -70,11 +66,10 @@ trait HttpCallsTrait
 
     /**
      * @param string $uri
-     * @param array  $data
-     * @param array  $headers
-     * @param array  $cookies
-     * @param array  $files
-     *
+     * @param array $data
+     * @param array $headers
+     * @param array $cookies
+     * @param array $files
      * @return ResponseInterface
      */
     protected function put(
@@ -83,8 +78,7 @@ trait HttpCallsTrait
         array $headers = [],
         array $cookies = [],
         array $files = []
-    ): ResponseInterface
-    {
+    ): ResponseInterface {
         $headers['CONTENT_TYPE'] = 'application/x-www-form-urlencoded';
 
         return $this->call('PUT', $uri, [], $data, $headers, $cookies, $files);
@@ -92,11 +86,10 @@ trait HttpCallsTrait
 
     /**
      * @param string $uri
-     * @param array  $data
-     * @param array  $headers
-     * @param array  $cookies
-     * @param array  $files
-     *
+     * @param array $data
+     * @param array $headers
+     * @param array $cookies
+     * @param array $files
      * @return ResponseInterface
      */
     protected function patch(
@@ -105,8 +98,7 @@ trait HttpCallsTrait
         array $headers = [],
         array $cookies = [],
         array $files = []
-    ): ResponseInterface
-    {
+    ): ResponseInterface {
         $headers['CONTENT_TYPE'] = 'application/x-www-form-urlencoded';
 
         return $this->call('PATCH', $uri, [], $data, $headers, $cookies, $files);
@@ -114,10 +106,9 @@ trait HttpCallsTrait
 
     /**
      * @param string $uri
-     * @param array  $data
-     * @param array  $headers
-     * @param array  $cookies
-     *
+     * @param array $data
+     * @param array $headers
+     * @param array $cookies
      * @return ResponseInterface
      */
     protected function delete(
@@ -125,8 +116,7 @@ trait HttpCallsTrait
         array $data = [],
         array $headers = [],
         array $cookies = []
-    ): ResponseInterface
-    {
+    ): ResponseInterface {
         return $this->call('DELETE', $uri, [], $data, $headers, $cookies);
     }
 }

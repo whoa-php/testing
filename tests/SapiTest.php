@@ -21,10 +21,10 @@ declare(strict_types=1);
 
 namespace Whoa\Tests\Testing;
 
+use Laminas\HttpHandlerRunner\Emitter\EmitterInterface;
 use Whoa\Testing\Sapi;
 use Mockery;
 use Psr\Http\Message\ResponseInterface;
-use Zend\HttpHandlerRunner\Emitter\EmitterInterface;
 
 /**
  * @package Whoa\Tests\Testing

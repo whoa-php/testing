@@ -67,30 +67,26 @@ class ApplicationStub implements ApplicationInterface
     protected function createContainerInstance(): WhoaContainerInterface
     {
         /** @var WhoaContainerInterface $mock */
-        $mock = Mockery::mock(WhoaContainerInterface::class);
-
-        return $mock;
+        return Mockery::mock(WhoaContainerInterface::class);
     }
 
 
     /**
      * @param WhoaContainerInterface $container
-     * @param array|null             $globalConfigurators
-     * @param array|null             $routeConfigurators
-     *
+     * @param array|null $globalConfigurators
+     * @param array|null $routeConfigurators
      * @return void
      */
     protected function configureContainer(
         WhoaContainerInterface $container,
         array $globalConfigurators = null,
         array $routeConfigurators = null
-    )
-    {
+    ) {
         $container && $globalConfigurators && $routeConfigurators ?: null;
     }
 
     /**
-     * @param Closure               $handler
+     * @param Closure $handler
      * @param RequestInterface|null $request
      *
      * @return ResponseInterface
@@ -100,8 +96,6 @@ class ApplicationStub implements ApplicationInterface
         $handler && $request ?: null;
 
         /** @var ResponseInterface $mock */
-        $mock = Mockery::mock(ResponseInterface::class);
-
-        return $mock;
+        return Mockery::mock(ResponseInterface::class);
     }
 }

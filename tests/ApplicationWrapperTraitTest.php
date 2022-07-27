@@ -34,10 +34,10 @@ class ApplicationWrapperTraitTest extends TestCase
      */
     public function testWrapperMethods(): void
     {
-        $onRequest          = false;
-        $onResponse         = false;
+        $onRequest = false;
+        $onResponse = false;
         $onContainerCreated = false;
-        $onContainerLast    = false;
+        $onContainerLast = false;
 
         $wrapper = new ApplicationWrapper();
 

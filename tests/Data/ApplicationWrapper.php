@@ -46,24 +46,21 @@ class ApplicationWrapper extends ApplicationStub implements ApplicationWrapperIn
 
     /**
      * @param WhoaContainerInterface $container
-     * @param array|null             $globalConfigurators
-     * @param array|null             $routeConfigurators
-     *
+     * @param array|null $globalConfigurators
+     * @param array|null $routeConfigurators
      * @return void
      */
     public function invokeConfigureContainer(
         WhoaContainerInterface $container,
         array $globalConfigurators = null,
         array $routeConfigurators = null
-    )
-    {
+    ) {
         $this->configureContainer($container, $globalConfigurators, $routeConfigurators);
     }
 
     /**
-     * @param Closure               $handler
+     * @param Closure $handler
      * @param RequestInterface|null $request
-     *
      * @return ResponseInterface
      */
     public function invokeHandleRequest(Closure $handler, RequestInterface $request = null): ResponseInterface
